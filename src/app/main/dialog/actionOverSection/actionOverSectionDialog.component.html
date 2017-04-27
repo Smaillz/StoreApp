@@ -1,0 +1,18 @@
+<div>
+ <h2 align="center">{{action}} section</h2>
+  <div>
+    <md-input-container>
+      <input mdInput placeholder="section name" [(ngModel)]="section.sectionName" required>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="priority(number)" [(ngModel)]="section.priority" required type="number">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="image id(number)" [(ngModel)]="section.imageId" required type="number">
+    </md-input-container>
+    <div class="button-control">
+      <button md-raised-button color="accent" (click)="dialogRef.close(section)" [disabled]="!section.sectionName || !section.priority || !section.imageId">Add</button>
+      <button md-raised-button color="warn" (click)="dialogRef.close(null)">Cancel</button>
+    </div>
+  </div>
+</div>
