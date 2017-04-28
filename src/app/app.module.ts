@@ -4,27 +4,29 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {
-  MdButtonModule, MdCardModule, MdDialogModule, MdIconModule, MdInputModule, MdMenuModule, MdSnackBarModule,
+  MdButtonModule, MdCardModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
+  MdSnackBarModule,
   MdTabsModule,
   MdToolbarModule
 } from "@angular/material";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import {NavBarComponent} from "./nav-bar/nav-bar.component";
-import {AppComponent} from './app.component';
-import {MainComponent} from "./main/main.component";
-import {ActionOverDialogSection} from "./main/dialog/actionOverSection/actionOverSectionDialog.component";
-import {HeaderComponent} from "./main/header/header.component";
-import {ContentComponent} from "./main/content/content.component";
+import {AppComponent} from "./app.component";
+import {NavBarComponent} from "app/nav-bar/nav-bar.component";
+import {MainContainer} from "./mainConteiner/mainContainer.component";
+import {HeaderContent} from "app/mainConteiner/headerContent/headerContent.component";
+import {MainContent} from "./mainConteiner/mainContent/mainContent.component";
+import {ActionOverDialogSection} from "./mainConteiner/dialog/actionOverSection/actionOverSectionDialog.component";
+import {HttpSectionService} from "./service/http.section.service";
+import {HttpCategoryGroupService} from "./service/http.categoryGroup.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    MainComponent,
-    HeaderComponent,
+    MainContainer,
+    HeaderContent,
+    MainContent,
     ActionOverDialogSection,
-    ContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,10 +42,10 @@ import {ContentComponent} from "./main/content/content.component";
     MdDialogModule,
     MdSnackBarModule,
     MdTabsModule,
-
+    MdListModule,
   ],
   entryComponents: [ActionOverDialogSection],
-  providers: [],
+  providers: [HttpSectionService, HttpCategoryGroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,4 +1,4 @@
-export class Section{
+export interface Section{
   id: number;
   imageId: number;
   priority: number;

@@ -1,14 +1,13 @@
 import {Component, OnInit} from "@angular/core";
-import {Section} from "../../entity/section";
+import {Section} from "../../model/section";
 import {HttpSectionService} from "../../service/http.section.service";
 
 @Component({
-  selector: 'content-mane-pane',
-  templateUrl: 'content.component.html',
-  styleUrls: ['content.component.less'],
-  providers: [HttpSectionService]
+  selector: 'main-content',
+  templateUrl: 'mainContent.component.html',
+  styleUrls: ['mainContent.component.less'],
 })
-export class ContentComponent implements OnInit{
+export class MainContent implements OnInit{
 
   sections:Section[];
 
@@ -23,6 +22,10 @@ export class ContentComponent implements OnInit{
       this.sections = resp.json();
       console.log(this.sections);
     });
+  }
+
+  static goTo(){
+    console.log("heloo");
   }
 
 }

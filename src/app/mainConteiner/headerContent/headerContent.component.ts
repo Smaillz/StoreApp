@@ -1,19 +1,15 @@
 import {Component} from "@angular/core";
 import {HttpSectionService} from "../../service/http.section.service";
-import {Section} from "../../entity/section";
+import {Section} from "../../model/section";
 import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
 import {ActionOverDialogSection} from "../dialog/actionOverSection/actionOverSectionDialog.component";
 
 @Component({
-  selector: 'heder-pane',
-  templateUrl: 'header.component.html',
-  styleUrls: ['header.component.less'],
-  providers: [HttpSectionService]
+  selector: 'header-content',
+  templateUrl: 'headerContent.component.html',
+  styleUrls: ['headerContent.component.less'],
 })
-export class HeaderComponent {
-
-  sectionId:string;
-  sec:Section = new Section();
+export class HeaderContent {
 
   constructor(private dialog: MdDialog,
               private httpSectionService : HttpSectionService,
@@ -25,7 +21,7 @@ export class HeaderComponent {
         enty: null,
         action: "Create"
       }
-    }
+    };
     let dialogRef = this.dialog.open(ActionOverDialogSection,config);
 
     dialogRef.afterClosed().subscribe(result => {
