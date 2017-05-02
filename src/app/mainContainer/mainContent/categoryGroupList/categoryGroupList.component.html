@@ -1,0 +1,26 @@
+<div class="list-category-group">
+  <div class="item" *ngFor="let item of categoryGroupList">
+    <div class="selected-item" (click)="goTo()">
+      {{item.categoryGroupName}}
+    </div>
+    <div class="selected-item-setting">
+      <button md-icon-button [mdMenuTriggerFor]="menu">
+        <md-icon>settings_applications
+        </md-icon>
+      </button>
+      <md-menu #menu="mdMenu">
+        <button md-menu-item (click)="openDialog(item,'Update')">
+          <md-icon>update</md-icon>
+          <span>Update</span>
+        </button>
+        <button md-menu-item (click)="openDialog(item,'Delete')">
+          <md-icon>delete</md-icon>
+          <span>Delete</span>
+        </button>
+      </md-menu>
+    </div>
+  </div>
+  <div class="item-add" align="center" (click)="openDialog(sectionId, 'Create')">
+    <md-icon class="setting">add</md-icon>
+  </div>
+</div>

@@ -5,8 +5,5 @@ import {Component} from "@angular/core";
   templateUrl: 'mainContainer.component.html',
   styleUrls: ['mainContainer.component.less'],
 })
-export class MainContainer {
-
-  constructor() {
-  }
+export class MainContainerComponent {
 }

@@ -1,23 +1,26 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {Section} from "../model/section";
+import {Subject} from 'rxjs/Subject';
+import {ISection} from "../model/ISection";
 
 @Injectable()
 export class HttpSectionService {
 
-  section: Section;
-  URL: string = "http://localhost:8080/sections/";
+  private URL: string;
+  private subject;
+  private headers: Headers;
 
   constructor(private http: Http) {
-    this.section = <Section>{};
+    this.URL = "http://localhost:8080/sections/";
+    this.subject = new Subject<ISection>();
+    this.headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   }
 
-  create(newSection: Section) {
-    let headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
-    return this.http.post(this.URL + 'add', JSON.stringify(newSection), {headers: headers})
-      .catch((error: any) => {
-        return Observable.throw(error);
+  create(newSection: ISection) {
+    return this.http.post(this.URL + 'add', JSON.stringify(newSection), {headers: this.headers})
+      .catch((err: any) => {
+        return Observable.throw(err);
       });
   }
 
@@ -29,25 +32,35 @@ export class HttpSectionService {
       );
   }
 
-  update(upSection: Section) {
-    let headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
-    return this.http.post(this.URL + 'update', JSON.stringify(upSection), {headers: headers})
-      .catch((error: any) => {
-        return Observable.throw(error);
+  update(upSection: ISection) {
+    return this.http.post(this.URL + 'update', JSON.stringify(upSection), {headers: this.headers})
+      .catch((err: any) => {
+        return Observable.throw(err);
       });
   }
 
   delete(id: number) {
-    return this.http.get(this.URL + 'delete/' + id).catch((err: any) => {
-      return Observable.throw(err);
-    });
+    return this.http.get(this.URL + 'delete/' + id)
+      .catch((err: any) => {
+        return Observable.throw(err);
+      });
   }
 
   findAllSection() {
-    return this.http.get(this.URL + 'get').catch((err: any) => {
-      return Observable.throw(err);
-    });
+    return this.http.get(this.URL + 'get')
+      .catch((err: any) => {
+        return Observable.throw(err);
+      });
   }
+
+  getData(): Observable<ISection> {
+    return this.subject.asObservable();
+  }
+
+  setData(section: ISection) {
+    this.subject.next(section);
+  }
+
 }
 
 

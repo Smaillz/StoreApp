@@ -1,0 +1,20 @@
+<div class="container">
+  <md-tab-group>
+    <md-tab *ngFor="let item of sections" label="{{item.sectionName}}" >
+      <div class="setting-sec">
+        <div>
+          <span></span>
+        </div>
+        <div class="setting-sec-button">
+          <button class="button-control" md-mini-fab (click)="openDialog(item, 'Update')"><md-icon>update</md-icon></button>
+          <button class="button-control" md-mini-fab (click)="openDialog(item, 'Delete')"><md-icon>delete</md-icon></button>
+        </div>
+      </div>
+      <div class="body-content">
+        <categoryGroup-list [sectionId]="item.id"></categoryGroup-list>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</div>
+
+

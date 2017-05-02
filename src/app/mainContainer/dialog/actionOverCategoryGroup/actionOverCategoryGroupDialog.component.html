@@ -1,0 +1,15 @@
+<div>
+ <h2 align="center">{{action}} category group</h2>
+  <div>
+    <md-input-container *ngIf="!deleted">
+      <input mdInput placeholder="name" [(ngModel)]="categoryGroup.categoryGroupName" required type="text">
+    </md-input-container>
+    <md-input-container *ngIf="!deleted">
+      <input mdInput placeholder="priority(number)" [(ngModel)]="categoryGroup.priority"  required type="number">
+    </md-input-container>
+    <div class="button-control">
+      <button md-raised-button color="accent" (click)="dialogRef.close(categoryGroup)" [disabled]="!categoryGroup.categoryGroupName || !categoryGroup.priority">{{action}}</button>
+      <button md-raised-button color="warn" (click)="dialogRef.close(null)">Cancel</button>
+    </div>
+  </div>
+</div>

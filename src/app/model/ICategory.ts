@@ -1,4 +1,4 @@
-export interface Category{
+export interface ICategory{
   categoryGroupId:number;
   categoryName:string;
   id:number;

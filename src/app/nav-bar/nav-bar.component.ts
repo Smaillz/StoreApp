@@ -1,25 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {HttpSectionService} from "../service/http.section.service";
-import {Section} from "../model/section";
 
 @Component({
   selector: 'nav-bar',
   templateUrl: 'nav-bar.component.html',
   styleUrls: ['nav-bar.component.less'],
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnDestroy{
 
-  sectionId:string;
-  section:Section;
-
-  constructor(private httpSectionService : HttpSectionService){
-    this.section = <Section>{}
+  constructor(private httpSectionService: HttpSectionService) {
   }
 
-  getSectionById(id:number){
-    this.httpSectionService.read(id).subscribe((resp:any)=> {
-        console.log(resp.json());
-      }
-    );
+  getSectionById(id: number) {
+    this.httpSectionService.read(id)
+      .subscribe(resp => {
+      });
+  }
+
+  ngOnDestroy(): void {
+    //Unsubscribe metod
   }
 }
