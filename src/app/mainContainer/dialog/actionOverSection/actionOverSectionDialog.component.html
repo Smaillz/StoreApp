@@ -1,18 +1,21 @@
 <div>
- <h2 align="center">{{action}} section</h2>
-  <div>
-    <md-input-container *ngIf="!deleted">
+  <h2 align="center">{{action}} section</h2>
+  <div *ngIf="!deleted">
+    <md-input-container>
       <input mdInput placeholder="section name" [(ngModel)]="section.sectionName" required>
     </md-input-container>
-    <md-input-container *ngIf="!deleted">
-      <input mdInput placeholder="priority(number)" [(ngModel)]="section.priority"  required type="number">
+    <md-input-container>
+      <input mdInput placeholder="priority(number)" [(ngModel)]="section.priority" required type="number">
     </md-input-container>
-    <md-input-container *ngIf="!deleted">
+    <md-input-container>
       <input mdInput placeholder="image id(number)" [(ngModel)]="section.imageId" required type="number">
     </md-input-container>
-    <div class="button-control">
-      <button md-raised-button color="accent" (click)="dialogRef.close(section)" [disabled]="!section.sectionName || !section.priority || !section.imageId">{{action}}</button>
-      <button md-raised-button color="warn" (click)="dialogRef.close(null)">Cancel</button>
-    </div>
   </div>
+  <div class="button-control">
+    <button md-raised-button color="accent" (click)="dialogRef.close(section)"
+            [disabled]="!section.sectionName || !section.priority || !section.imageId">{{action}}
+    </button>
+    <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+  </div>
+
 </div>

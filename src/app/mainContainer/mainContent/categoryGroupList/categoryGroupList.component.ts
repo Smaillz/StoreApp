@@ -1,8 +1,9 @@
 import {Component, Input, NgZone, OnChanges, OnDestroy, SimpleChanges} from "@angular/core";
-import {HttpCategoryGroupService} from "../../../service/http.categoryGroup.service";
 import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
 import {ActionOverDialogCategoryGroup} from "../../dialog/actionOverCategoryGroup/actionOverCategoryGroupDialog.component";
 import {ICategoryGroup} from "../../../model/ICategoryGroup";
+import {Subscription} from "rxjs/Subscription";
+import {HttpService} from "../../../service/http.service";
 
 @Component({
   selector: 'categoryGroup-list',
@@ -13,12 +14,20 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
 
   @Input() sectionId: number;
   private action: string;
+  private currentCategoryGroupId: number;
   private categoryGroupList: ICategoryGroup[];
+  private subscription: Subscription = new Subscription();
+  private doAction = {
+    delete: this.removeCategoruGroup,
+    create: this.addCategoryGroup,
+    update: this.updateCategoryGroup
+  };
 
-  constructor(private httpCategoryGroupService: HttpCategoryGroupService,
+  constructor(private httpService: HttpService,
               private dialog: MdDialog,
               private snackBar: MdSnackBar,
               private ngZone: NgZone) {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -26,39 +35,43 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   }
 
   getCategoryGroupBySectionId(id: number) {
-    this.httpCategoryGroupService.findCategoryGroupBySectionId(id)
-      .subscribe(resp => {
-        this.ngZone.run(() => {
-          this.categoryGroupList = resp.json();
-        });
-      });
+    this.subscription.add(
+      this.httpService.findCategoryGroupBySectionId(id)
+        .subscribe(resp => {
+          this.ngZone.run(() => {
+            this.categoryGroupList = resp.json();
+          });
+        }));
   }
 
   addCategoryGroup(newCategoruGroup: ICategoryGroup) {
-    this.httpCategoryGroupService.create(newCategoruGroup)
-      .subscribe(resp => {
-        this.openSnackBar(this.action);
-        this.getCategoryGroupBySectionId(this.sectionId);
-      });
+    this.subscription.add(
+      this.httpService.createCategoryGroup(newCategoruGroup)
+        .subscribe(resp => {
+          this.openSnackBar(this.action);
+          this.getCategoryGroupBySectionId(this.sectionId);
+        }));
   }
 
   updateCategoryGroup(changedCategoryGroup: ICategoryGroup) {
-    this.httpCategoryGroupService.update(changedCategoryGroup)
-      .subscribe(resp => {
-        this.openSnackBar(this.action);
-        this.getCategoryGroupBySectionId(this.sectionId);
-      });
+    this.subscription.add(
+      this.httpService.updateCategoryGroup(changedCategoryGroup)
+        .subscribe(resp => {
+          this.openSnackBar(this.action);
+          this.getCategoryGroupBySectionId(this.sectionId);
+        }));
   }
 
   removeCategoruGroup(removeCategoryGroup: ICategoryGroup) {
-    this.httpCategoryGroupService.delete(removeCategoryGroup.id)
-      .subscribe(resp => {
-        this.openSnackBar(this.action);
-        this.getCategoryGroupBySectionId(this.sectionId);
-      });
+    this.subscription.add(
+      this.httpService.deleteCategoryGroup(removeCategoryGroup.id)
+        .subscribe(resp => {
+          this.openSnackBar(this.action);
+          this.getCategoryGroupBySectionId(this.sectionId);
+        }));
   }
 
-  openDialog(obj: any, currentAction) {
+  openDialog(obj: CategoryGroupListComponent, currentAction: string) {
     this.action = currentAction;
 
     const config: MdDialogConfig = {
@@ -72,13 +85,7 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
     dialogRef.afterClosed()
       .subscribe(res => {
         if (res) {
-          if (this.action === "Create") {
-            this.addCategoryGroup(res);
-          } else if (this.action === "Update") {
-            this.updateCategoryGroup(res);
-          } else {
-            this.removeCategoruGroup(res)
-          }
+          this.doAction[this.action].bind(this)(res);
         }
       });
   }
@@ -89,7 +96,11 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
     });
   }
 
+  choiceCategoryGroup(categoryGroup: ICategoryGroup) {
+    this.currentCategoryGroupId = categoryGroup.id;
+  }
+
   ngOnDestroy(): void {
-    //Unsubscribe metod
+    this.subscription.unsubscribe();
   }
 }

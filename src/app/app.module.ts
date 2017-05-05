@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {
-  MdButtonModule, MdCardModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
+  MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
   MdSnackBarModule,
   MdTabsModule,
   MdToolbarModule
@@ -11,25 +11,27 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from "./app.component";
 import {NavBarComponent} from "app/nav-bar/nav-bar.component";
-import {HeaderContentComponent} from "app/mainContainer/headerContent/headerContent.component";
 import {MainContentComponent} from "./mainContainer/mainContent/mainContent.component";
 import {ActionOverDialogSection} from "./mainContainer/dialog/actionOverSection/actionOverSectionDialog.component";
-import {HttpSectionService} from "./service/http.section.service";
-import {HttpCategoryGroupService} from "./service/http.categoryGroup.service";
 import {MainContainerComponent} from "./mainContainer/mainContainer.component";
 import {CategoryGroupListComponent} from "./mainContainer/mainContent/categoryGroupList/categoryGroupList.component";
 import {ActionOverDialogCategoryGroup} from "./mainContainer/dialog/actionOverCategoryGroup/actionOverCategoryGroupDialog.component";
+import {CategoryComponent} from "./mainContainer/mainContent/categoryGroupList/category/category.component";
+import {ActionOverCategoryDialog} from "./mainContainer/dialog/actionOverCategory/actionOverCategoryDialog.component";
+import {HttpService} from "./service/http.service";
+import {ExchangeDataService} from "./service/exchangeData.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     MainContainerComponent,
-    HeaderContentComponent,
     MainContentComponent,
     ActionOverDialogSection,
     CategoryGroupListComponent,
     ActionOverDialogCategoryGroup,
+    CategoryComponent,
+    ActionOverCategoryDialog,
   ],
   imports: [
     BrowserModule,
@@ -46,14 +48,16 @@ import {ActionOverDialogCategoryGroup} from "./mainContainer/dialog/actionOverCa
     MdSnackBarModule,
     MdTabsModule,
     MdListModule,
+    MdChipsModule,
   ],
   entryComponents: [
     ActionOverDialogSection,
-    ActionOverDialogCategoryGroup
+    ActionOverDialogCategoryGroup,
+    ActionOverCategoryDialog
   ],
   providers: [
-    HttpSectionService,
-    HttpCategoryGroupService
+    HttpService,
+    ExchangeDataService,
   ],
   bootstrap: [AppComponent]
 })

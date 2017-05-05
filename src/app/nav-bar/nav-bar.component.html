@@ -1,27 +1,19 @@
 <md-toolbar color="primary">
   <span>Some Store</span>
   <button md-icon-button [mdMenuTriggerFor]="menu">
-    <md-icon>settings</md-icon>
+    <md-icon>menu</md-icon>
   </button>
   <md-menu #menu="mdMenu">
-    <button md-menu-item>
-      <md-icon>dialpad</md-icon>
-      <span>#</span>
-    </button>
-    <button md-menu-item>
-      <md-icon>voicemail</md-icon>
-      <span>#</span>
-    </button>
-    <button md-menu-item>
-      <md-icon>notifications_off</md-icon>
-      <span>#</span>
+    <button md-menu-item (click)="openDialog({},'create')">
+      <md-icon>add</md-icon>
+      <span>Create new section</span>
     </button>
   </md-menu>
   <span class="spacer"></span>
   <md-input-container>
-    <input mdInput placeholder="Search" [(ngModel)]="sectionId" type="number">
+    <input mdInput placeholder="Search" [(ngModel)]="searchItem" type="number">
   </md-input-container >
-  <button md-mini-fab class="search" (click)="getSectionById(sectionId)" [disabled]="!sectionId">
+  <button md-mini-fab class="search" (click)="search(searchItem)" [disabled]="!sectionId">
     <md-icon class="example-icon">search</md-icon>
   </button>
 </md-toolbar>

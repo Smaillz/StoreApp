@@ -1,8 +1,10 @@
 import {Component, OnInit, NgZone, OnDestroy} from "@angular/core";
-import {HttpSectionService} from "../../service/http.section.service";
 import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
 import {ActionOverDialogSection} from "../dialog/actionOverSection/actionOverSectionDialog.component";
 import {ISection} from "../../model/ISection";
+import {Subscription} from "rxjs/Subscription";
+import {HttpService} from "../../service/http.service";
+import {ExchangeDataService} from "../../service/exchangeData.service";
 
 @Component({
   selector: 'main-content',
@@ -13,12 +15,19 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   private sections: ISection[];
   private action: string;
+  private subscription: Subscription = new Subscription();
+  private doAction = {
+    delete: this.removeSection,
+    // create: this.addSection,
+    update: this.updateSection,
+  };
 
   constructor(private dialog: MdDialog,
-              private httpSectionService: HttpSectionService,
+              private httpService: HttpService,
+              private exchangeService: ExchangeDataService,
               private snackBar: MdSnackBar,
               private ngZone: NgZone) {
-    this.httpSectionService.getData().subscribe(resp => {
+    this.exchangeService.getDataSection().subscribe(resp => {
       this.getAllSection();
     });
   }
@@ -28,28 +37,35 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   getAllSection() {
-    this.httpSectionService.findAllSection()
-      .subscribe((resp) => {
-        this.ngZone.run(() => {
-          this.sections = resp.json();
-        });
-      });
+    this.subscription.add(
+      this.httpService.findAllSection()
+        .subscribe((resp) => {
+          this.ngZone.run(() => {
+            this.sections = resp.json();
+          });
+        })
+    );
   }
 
   removeSection(removeSection: ISection) {
-    this.httpSectionService.delete(removeSection.id)
-      .subscribe(resp => {
-        this.openSnackBar(this.action);
-        this.getAllSection();
-      });
+    this.subscription.add(
+      this.httpService.deleteSection(removeSection.id)
+        .subscribe(resp => {
+          this.openSnackBar(this.action);
+          this.getAllSection();
+        })
+    );
+
   }
 
   updateSection(newSection: ISection) {
-    this.httpSectionService.update(newSection)
-      .subscribe(resp => {
-        this.openSnackBar(this.action);
-        this.getAllSection();
-      });
+    this.subscription.add(
+      this.httpService.updateSection(newSection)
+        .subscribe(resp => {
+          this.openSnackBar(this.action);
+          this.getAllSection();
+        })
+    );
   }
 
   openDialog(obj: any, currentAction: string) {
@@ -66,13 +82,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed()
       .subscribe(res => {
         if (res) {
-          if (this.action === "Create") {
-            //create function
-          } else if (this.action === "Update") {
-            this.updateSection(res);
-          } else {
-            this.removeSection(res);
-          }
+          this.doAction[this.action].bind(this)(res);
         }
       });
   }
@@ -84,6 +94,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //Unsubscribe metod
+    this.subscription.unsubscribe();
   }
+
 }
