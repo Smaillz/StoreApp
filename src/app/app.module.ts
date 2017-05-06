@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {
   MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
+  MdProgressSpinnerModule,
   MdSnackBarModule,
   MdTabsModule,
   MdToolbarModule
@@ -49,6 +50,7 @@ import {ExchangeDataService} from "./service/exchangeData.service";
     MdTabsModule,
     MdListModule,
     MdChipsModule,
+    MdProgressSpinnerModule,
   ],
   entryComponents: [
     ActionOverDialogSection,
