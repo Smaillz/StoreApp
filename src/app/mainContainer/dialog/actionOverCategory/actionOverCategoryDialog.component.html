@@ -1,25 +1,27 @@
-<div>
-  <h2 align="center">{{action}} section</h2>
-  <div *ngIf="!deleted">
-    <md-input-container>
-      <input mdInput placeholder="category name" [(ngModel)]="category.categoryName" required>
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="priority(number)" [(ngModel)]="category.priority" required type="number">
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="image id(number)" [(ngModel)]="category.imageId" required type="number">
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="Url name" [(ngModel)]="category.urlName" required>
-    </md-input-container>
-  </div>
-  <div class="button-control">
-    <button md-raised-button color="accent" (click)="dialogRef.close(category)"
-            [disabled]="!category.categoryName || !category.priority || !category.imageId && !category.urlName">
-      {{action}}
-    </button>
-    <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
-  </div>
-
+<div class="container">
+  <form #entityForm="ngForm">
+    <h2 align="center">{{action}} section</h2>
+    <div class="input-control" *ngIf="action!=='delete'">
+      <md-input-container>
+        <input mdInput placeholder="section name" [(ngModel)]="entity.categoryName" required name="sectionName">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="priority(number)" [(ngModel)]="entity.priority" required type="number"
+               name="priority">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="image id(number)" [(ngModel)]="entity.imageId" required type="number"
+               name="imageId">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="Url name" [(ngModel)]="entity.urlName" required name="urlName">
+      </md-input-container>
+    </div>
+    <div class="button-control">
+      <button md-raised-button color="accent" (click)="dialogRef.close(entity)" [disabled]="!entityForm.form.valid">
+        {{action}}
+      </button>
+      <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+    </div>
+  </form>
 </div>

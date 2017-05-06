@@ -1,18 +1,20 @@
-<div>
-  <h2 align="center">{{action}} category group</h2>
-  <div *ngIf="!deleted">
-    <md-input-container>
-      <input mdInput placeholder="name" [(ngModel)]="categoryGroup.categoryGroupName" required type="text">
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="priority(number)" [(ngModel)]="categoryGroup.priority" required type="number">
-    </md-input-container>
-  </div>
-  <div class="button-control">
-    <button md-raised-button color="accent" (click)="dialogRef.close(categoryGroup)"
-            [disabled]="!categoryGroup.categoryGroupName || !categoryGroup.priority">{{action}}
-    </button>
-    <button md-raised-button color="warn" (click)="dialogRef.close(null)">Cancel</button>
-  </div>
-
+<div class="container">
+  <form #entityForm="ngForm">
+    <h2 align="center">{{action}} section</h2>
+    <div class="input-control" *ngIf="action!=='delete'">
+      <md-input-container>
+        <input mdInput placeholder="section name" [(ngModel)]="entity.categoryGroupName" required name="sectionName">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="priority(number)" [(ngModel)]="entity.priority" required type="number"
+               name="priority">
+      </md-input-container>
+    </div>
+    <div class="button-control">
+      <button md-raised-button color="accent" (click)="dialogRef.close(entity)" [disabled]="!entityForm.form.valid">
+        {{action}}
+      </button>
+      <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+    </div>
+  </form>
 </div>

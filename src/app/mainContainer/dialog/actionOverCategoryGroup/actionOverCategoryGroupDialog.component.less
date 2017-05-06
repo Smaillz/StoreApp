@@ -1,12 +1,22 @@
-div {
-  width: 300px;
+div.container {
   display: flex;
+  width: 300px;
+}
+
+form,md-input-container{
+  width: 100%;
+}
+
+div.input-control {
   flex-direction: column;
 }
 
-div.button-control {
-  flex-direction: row;
-  justify-content: space-between;
+h2 {
+  margin: 10px;
+}
+
+button:first-letter, h2:first-letter {
+  text-transform: uppercase;
 }
 
 input::-webkit-outer-spin-button,
@@ -15,10 +25,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-h2 {
-  margin: 10px;
+div.button-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
-h2:first-letter {
-  text-transform: uppercase;
-}
+

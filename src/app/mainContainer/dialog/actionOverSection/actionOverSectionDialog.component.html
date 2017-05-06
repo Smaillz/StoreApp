@@ -1,21 +1,24 @@
-<div>
-  <h2 align="center">{{action}} section</h2>
-  <div *ngIf="!deleted">
-    <md-input-container>
-      <input mdInput placeholder="section name" [(ngModel)]="section.sectionName" required>
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="priority(number)" [(ngModel)]="section.priority" required type="number">
-    </md-input-container>
-    <md-input-container>
-      <input mdInput placeholder="image id(number)" [(ngModel)]="section.imageId" required type="number">
-    </md-input-container>
-  </div>
-  <div class="button-control">
-    <button md-raised-button color="accent" (click)="dialogRef.close(section)"
-            [disabled]="!section.sectionName || !section.priority || !section.imageId">{{action}}
-    </button>
-    <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
-  </div>
-
+<div class="container">
+  <form #entityForm="ngForm">
+    <h2 align="center">{{action}} section</h2>
+    <div class="input-control" *ngIf="action!=='delete'">
+      <md-input-container>
+        <input mdInput placeholder="section name" [(ngModel)]="entity.sectionName" required name="sectionName">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="priority(number)" [(ngModel)]="entity.priority" required type="number"
+               name="priority">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="image id(number)" [(ngModel)]="entity.imageId" required type="number"
+               name="imageId">
+      </md-input-container>
+    </div>
+    <div class="button-control">
+      <button md-raised-button color="accent" (click)="dialogRef.close(entity)" [disabled]="!entityForm.form.valid">
+        {{action}}
+      </button>
+      <button md-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+    </div>
+  </form>
 </div>
