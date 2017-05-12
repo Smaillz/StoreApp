@@ -1,4 +1,5 @@
-<div class="container" *ngIf="!spinner">
+<spinner></spinner>
+<div class="container">
   <md-tab-group>
     <md-tab *ngFor="let item of sections" label="{{item.sectionName}}">
       <div class="setting-sec">
@@ -15,4 +16,3 @@
     </md-tab>
   </md-tab-group>
 </div>
-<div class="loader" *ngIf="spinner">Loading...</div>

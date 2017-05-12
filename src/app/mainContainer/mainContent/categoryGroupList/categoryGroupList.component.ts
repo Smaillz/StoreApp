@@ -4,6 +4,7 @@ import {ActionOverDialogCategoryGroup} from "../../dialog/actionOverCategoryGrou
 import {ICategoryGroup} from "../../../model/ICategoryGroup";
 import {Subscription} from "rxjs/Subscription";
 import {HttpService} from "../../../service/http.service";
+import {ExchangeDataService} from "../../../service/exchangeData.service";
 
 @Component({
   selector: 'categoryGroup-list',
@@ -15,7 +16,7 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   @Input() sectionId: number;
   private action: string;
   private currentCategoryGroupId: number;
-  private categoryGroupList: ICategoryGroup[];
+  private categoryGroupList: ICategoryGroup[]= [];
   private subscription: Subscription = new Subscription();
   private doAction = {
     delete: this.removeCategoruGroup,
@@ -24,6 +25,7 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   };
 
   constructor(private httpService: HttpService,
+              private exchangeDataService: ExchangeDataService,
               private dialog: MdDialog,
               private snackBar: MdSnackBar,
               private ngZone: NgZone) {
@@ -35,10 +37,12 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   }
 
   getCategoryGroupBySectionId(id: number) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.findCategoryGroupBySectionId(id)
         .subscribe(resp => {
           this.ngZone.run(() => {
+            this.exchangeDataService.spinner = false;
             this.categoryGroupList = resp.json();
           });
         }));

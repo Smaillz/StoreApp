@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class ExchangeDataService{
 
+  private _spinner:boolean;
   private subjectSection:Subject<ISection>;
 
   constructor(){
@@ -20,4 +21,11 @@ export class ExchangeDataService{
     this.subjectSection.next(section);
   }
 
+  get spinner(): boolean{
+    return this._spinner;
+  }
+
+  set spinner(state: boolean){
+    this._spinner = state;
+  }
 }

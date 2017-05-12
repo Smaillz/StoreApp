@@ -1,12 +1,14 @@
 <div class="container">
   <div class="category-item" *ngFor="let item of categoryes">
-    <div class="category-img">
-      <img
-        src="https://image.flaticon.com/icons/svg/401/401160.svg"
-        width="40px" height="40px">
-    </div>
-    <div class="category-name">
-      {{item.categoryName}}
+    <div class="item-route" (click)="goTo(item.urlName)">
+      <div class="category-img">
+        <img
+          src="https://image.flaticon.com/icons/svg/401/401160.svg"
+          width="40px" height="40px">
+      </div>
+      <div class="category-name">
+        {{item.categoryName}}
+      </div>
     </div>
     <div class="category-setting">
       <md-icon [mdMenuTriggerFor]="menu">settings_applications</md-icon>

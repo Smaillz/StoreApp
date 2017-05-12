@@ -1,4 +1,4 @@
-import {Component, OnInit, NgZone, OnDestroy, EventEmitter, Output} from "@angular/core";
+import {Component, OnInit, NgZone, OnDestroy} from "@angular/core";
 import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
 import {ActionOverDialogSection} from "../dialog/actionOverSection/actionOverSectionDialog.component";
 import {ISection} from "../../model/ISection";
@@ -13,9 +13,8 @@ import {ExchangeDataService} from "../../service/exchangeData.service";
 })
 export class MainContentComponent implements OnInit, OnDestroy {
 
-  private sections: ISection[];
+  private sections: ISection[] =[];
   private action: string;
-  private spinner: boolean = true;
   private subscription: Subscription = new Subscription();
   private doAction = {
     delete: this.removeSection,
@@ -38,12 +37,12 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   getAllSection() {
-    this.spinner = true;
+    this.exchangeService.spinner = true;
     this.subscription.add(
       this.httpService.findAllSection()
         .subscribe((resp) => {
           this.ngZone.run(() => {
-            this.spinner = false;
+            this.exchangeService.spinner = false;
             this.sections = resp.json();
           });
         })
@@ -99,5 +98,4 @@ export class MainContentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }

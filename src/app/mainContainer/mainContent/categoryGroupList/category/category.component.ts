@@ -4,6 +4,8 @@ import {ICategory} from "../../../../model/ICategory";
 import {Subscription} from "rxjs/Subscription";
 import {ActionOverCategoryDialog} from "../../../dialog/actionOverCategory/actionOverCategoryDialog.component";
 import {HttpService} from "../../../../service/http.service";
+import {ExchangeDataService} from "../../../../service/exchangeData.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "category",
@@ -14,7 +16,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
 
   @Input() categoryGroupId: number;
 
-  private categoryes: ICategory[];
+  private categoryes: ICategory[] = [];
   private action: string;
   private subscription: Subscription = new Subscription();
   private doAction = {
@@ -24,9 +26,11 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   };
 
   constructor(private httpService: HttpService,
+              private exchangeDataService: ExchangeDataService,
               private dialog: MdDialog,
               private snackBar: MdSnackBar,
-              private ngZone: NgZone) {
+              private ngZone: NgZone,
+  private router:Router) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -34,10 +38,12 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   }
 
   getAllCategoryByCategoryGroupId(id: number) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.findCategoryByCategoryGroupId(id)
         .subscribe(res => {
           this.ngZone.run(() => {
+            this.exchangeDataService.spinner = false;
             this.categoryes = res.json();
           })
         })
@@ -97,6 +103,10 @@ export class CategoryComponent implements OnChanges, OnDestroy {
     this.snackBar.open("Category has been: ", action, {
       duration: 1000,
     });
+  }
+
+  goTo(url: string) {
+      this.router.navigate([`/${url}`]);
   }
 
   ngOnDestroy(): void {
