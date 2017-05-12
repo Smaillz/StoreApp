@@ -38,7 +38,6 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   }
 
   getAllCategoryByCategoryGroupId(id: number) {
-    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.findCategoryByCategoryGroupId(id)
         .subscribe(res => {
@@ -51,6 +50,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   }
 
   addCategory(newCategory: ICategory) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.createCategory(newCategory)
         .subscribe(res => {
@@ -61,6 +61,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   }
 
   editCategory(category: ICategory) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.updateCategory(category)
         .subscribe(res => {
@@ -71,6 +72,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   }
 
   removeCategory(category: ICategory) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.deleteCategory(category.id)
         .subscribe(res => {

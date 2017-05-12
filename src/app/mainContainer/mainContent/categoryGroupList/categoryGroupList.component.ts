@@ -37,12 +37,12 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   }
 
   getCategoryGroupBySectionId(id: number) {
-    this.exchangeDataService.spinner = true;
+    // this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.findCategoryGroupBySectionId(id)
         .subscribe(resp => {
           this.ngZone.run(() => {
-            this.exchangeDataService.spinner = false;
+            // this.exchangeDataService.spinner = false;
             this.categoryGroupList = resp.json();
           });
         }));

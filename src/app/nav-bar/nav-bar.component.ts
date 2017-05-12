@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ActionOverDialogSection} from "../mainContainer/dialog/actionOverSection/actionOverSectionDialog.component";
 import {HttpService} from "../service/http.service";
 import {ExchangeDataService} from "../service/exchangeData.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'nav-bar',
@@ -24,14 +25,16 @@ export class NavBarComponent implements OnDestroy {
   constructor(private httpService: HttpService,
               private exchangeService: ExchangeDataService,
               private dialog: MdDialog,
-              private snackBar: MdSnackBar) {
+              private snackBar: MdSnackBar,
+              private router: Router) {
   }
 
   search() {
-    //do search
   }
 
   addSection(newSection: ISection) {
+    this.router.navigate(["/main"]);
+    this.exchangeService.spinner = true;
     this.subscription.add(
       this.httpService.createSection(newSection).subscribe(res => {
         this.openSnackBar(this.action);
@@ -63,6 +66,10 @@ export class NavBarComponent implements OnDestroy {
     this.snackBar.open("Section has been: ", action, {
       duration: 1000,
     });
+  }
+
+  goTo() {
+    this.router.navigate(["/main"]);
   }
 
   ngOnDestroy(): void {

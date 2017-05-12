@@ -37,7 +37,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   getAllSection() {
-    this.exchangeService.spinner = true;
     this.subscription.add(
       this.httpService.findAllSection()
         .subscribe((resp) => {
@@ -50,6 +49,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   removeSection(removeSection: ISection) {
+    this.exchangeService.spinner = true;
     this.subscription.add(
       this.httpService.deleteSection(removeSection.id)
         .subscribe(resp => {
@@ -61,6 +61,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   updateSection(newSection: ISection) {
+    this.exchangeService.spinner = true;
     this.subscription.add(
       this.httpService.updateSection(newSection)
         .subscribe(resp => {

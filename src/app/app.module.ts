@@ -19,6 +19,7 @@ import {HttpService} from "./service/http.service";
 import {ExchangeDataService} from "./service/exchangeData.service";
 import {SpinnerComponent} from "./mainContainer/spinner/spinner.component";
 import {ProductContainerComponent} from "./productContainer/productContainer.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {ProductContainerComponent} from "./productContainer/productContainer.com
     SpinnerComponent,
     //product components
     ProductContainerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
