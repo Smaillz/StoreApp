@@ -1,11 +1,10 @@
 import {Component, Input, NgZone, OnChanges, OnDestroy, SimpleChanges} from "@angular/core";
-import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
+import {MdDialog, MdDialogConfig} from "@angular/material";
 import {ICategory} from "../../../../model/ICategory";
 import {Subscription} from "rxjs/Subscription";
 import {ActionOverCategoryDialog} from "../../../dialog/actionOverCategory/actionOverCategoryDialog.component";
 import {HttpService} from "../../../../service/http.service";
 import {ExchangeDataService} from "../../../../service/exchangeData.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: "category",
@@ -16,7 +15,8 @@ export class CategoryComponent implements OnChanges, OnDestroy {
 
   @Input() categoryGroupId: number;
 
-  private categoryes: ICategory[] = [];
+  private componentName = "Category";
+  private categoryes;
   private action: string;
   private subscription: Subscription = new Subscription();
   private doAction = {
@@ -28,9 +28,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
   constructor(private httpService: HttpService,
               private exchangeDataService: ExchangeDataService,
               private dialog: MdDialog,
-              private snackBar: MdSnackBar,
-              private ngZone: NgZone,
-  private router:Router) {
+              private ngZone: NgZone) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -43,7 +41,7 @@ export class CategoryComponent implements OnChanges, OnDestroy {
         .subscribe(res => {
           this.ngZone.run(() => {
             this.exchangeDataService.spinner = false;
-            this.categoryes = res.json();
+            this.categoryes = <ICategory[]>res.json();
           })
         })
     );
@@ -53,8 +51,8 @@ export class CategoryComponent implements OnChanges, OnDestroy {
     this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.createCategory(newCategory)
-        .subscribe(res => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
+          this.exchangeDataService.openSnackBar(this.componentName,this.action);
           this.getAllCategoryByCategoryGroupId(this.categoryGroupId);
         })
     );
@@ -64,9 +62,9 @@ export class CategoryComponent implements OnChanges, OnDestroy {
     this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.updateCategory(category)
-        .subscribe(res => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
           this.getAllCategoryByCategoryGroupId(this.categoryGroupId);
+          this.exchangeDataService.openSnackBar(this.componentName,this.action);
         })
     );
   }
@@ -75,9 +73,9 @@ export class CategoryComponent implements OnChanges, OnDestroy {
     this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.deleteCategory(category.id)
-        .subscribe(res => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
           this.getAllCategoryByCategoryGroupId(this.categoryGroupId);
+          this.exchangeDataService.openSnackBar(this.componentName,this.action);
         })
     );
   }
@@ -99,16 +97,6 @@ export class CategoryComponent implements OnChanges, OnDestroy {
           this.doAction[this.action].bind(this)(res);
         }
       });
-  }
-
-  openSnackBar(action: string) {
-    this.snackBar.open("Category has been: ", action, {
-      duration: 1000,
-    });
-  }
-
-  goTo(url: string) {
-      this.router.navigate([`/${url}`]);
   }
 
   ngOnDestroy(): void {

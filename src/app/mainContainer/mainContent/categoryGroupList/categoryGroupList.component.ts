@@ -1,5 +1,5 @@
 import {Component, Input, NgZone, OnChanges, OnDestroy, SimpleChanges} from "@angular/core";
-import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
+import {MdDialog, MdDialogConfig} from "@angular/material";
 import {ActionOverDialogCategoryGroup} from "../../dialog/actionOverCategoryGroup/actionOverCategoryGroupDialog.component";
 import {ICategoryGroup} from "../../../model/ICategoryGroup";
 import {Subscription} from "rxjs/Subscription";
@@ -14,9 +14,10 @@ import {ExchangeDataService} from "../../../service/exchangeData.service";
 export class CategoryGroupListComponent implements OnChanges, OnDestroy {
 
   @Input() sectionId: number;
+  private componentName = "CategoryGroup";
   private action: string;
   private currentCategoryGroupId: number;
-  private categoryGroupList: ICategoryGroup[]= [];
+  private categoryGroupList;
   private subscription: Subscription = new Subscription();
   private doAction = {
     delete: this.removeCategoruGroup,
@@ -27,7 +28,6 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   constructor(private httpService: HttpService,
               private exchangeDataService: ExchangeDataService,
               private dialog: MdDialog,
-              private snackBar: MdSnackBar,
               private ngZone: NgZone) {
 
   }
@@ -37,40 +37,42 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
   }
 
   getCategoryGroupBySectionId(id: number) {
-    // this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.findCategoryGroupBySectionId(id)
         .subscribe(resp => {
           this.ngZone.run(() => {
-            // this.exchangeDataService.spinner = false;
-            this.categoryGroupList = resp.json();
+            this.exchangeDataService.spinner = false;
+            this.categoryGroupList = <ICategoryGroup>resp.json();
           });
         }));
   }
 
   addCategoryGroup(newCategoruGroup: ICategoryGroup) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.createCategoryGroup(newCategoruGroup)
-        .subscribe(resp => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
+          this.exchangeDataService.openSnackBar(this.componentName, this.action);
           this.getCategoryGroupBySectionId(this.sectionId);
         }));
   }
 
   updateCategoryGroup(changedCategoryGroup: ICategoryGroup) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.updateCategoryGroup(changedCategoryGroup)
-        .subscribe(resp => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
+          this.exchangeDataService.openSnackBar(this.componentName, this.action);
           this.getCategoryGroupBySectionId(this.sectionId);
         }));
   }
 
   removeCategoruGroup(removeCategoryGroup: ICategoryGroup) {
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
       this.httpService.deleteCategoryGroup(removeCategoryGroup.id)
-        .subscribe(resp => {
-          this.openSnackBar(this.action);
+        .subscribe(() => {
+          this.exchangeDataService.openSnackBar(this.componentName, this.action);
           this.getCategoryGroupBySectionId(this.sectionId);
         }));
   }
@@ -92,12 +94,6 @@ export class CategoryGroupListComponent implements OnChanges, OnDestroy {
           this.doAction[this.action].bind(this)(res);
         }
       });
-  }
-
-  openSnackBar(currentAction: string) {
-    this.snackBar.open("CategoryGroup has been: ", currentAction, {
-      duration: 1000,
-    });
   }
 
   choiceCategoryGroup(categoryGroup: ICategoryGroup) {

@@ -1,11 +1,10 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ISection} from "../model/ISection";
-import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
+import {MdDialog, MdDialogConfig} from "@angular/material";
 import {Subscription} from "rxjs/Subscription";
 import {ActionOverDialogSection} from "../mainContainer/dialog/actionOverSection/actionOverSectionDialog.component";
 import {HttpService} from "../service/http.service";
 import {ExchangeDataService} from "../service/exchangeData.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'nav-bar',
@@ -14,31 +13,27 @@ import {Router} from "@angular/router";
 })
 export class NavBarComponent implements OnDestroy {
 
+
   private action: string;
   private subscription: Subscription = new Subscription();
   private doAction = {
-    // delete: this.removeSection,
     create: this.addSection,
-    // update: this.updateSection
   };
 
   constructor(private httpService: HttpService,
-              private exchangeService: ExchangeDataService,
-              private dialog: MdDialog,
-              private snackBar: MdSnackBar,
-              private router: Router) {
+              private exchangeDataService: ExchangeDataService,
+              private dialog: MdDialog) {
   }
 
   search() {
   }
 
   addSection(newSection: ISection) {
-    this.router.navigate(["/main"]);
-    this.exchangeService.spinner = true;
+    this.exchangeDataService.spinner = true;
     this.subscription.add(
-      this.httpService.createSection(newSection).subscribe(res => {
-        this.openSnackBar(this.action);
-        this.exchangeService.setDataSection(newSection);
+      this.httpService.createSection(newSection).subscribe(() => {
+        this.exchangeDataService.openSnackBar("Section",this.action);
+        this.exchangeDataService.setDataSection(newSection);
       })
     );
   }
@@ -60,16 +55,6 @@ export class NavBarComponent implements OnDestroy {
           this.doAction[this.action].bind(this)(res);
         }
       });
-  }
-
-  openSnackBar(action: string) {
-    this.snackBar.open("Section has been: ", action, {
-      duration: 1000,
-    });
-  }
-
-  goTo() {
-    this.router.navigate(["/main"]);
   }
 
   ngOnDestroy(): void {

@@ -2,14 +2,15 @@ import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/Subject";
 import {ISection} from "../model/ISection";
 import {Observable} from "rxjs/Observable";
+import {MdSnackBar} from "@angular/material";
 
 @Injectable()
 export class ExchangeDataService{
 
-  private _spinner:boolean;
+  private _spinner:boolean = true;
   private subjectSection:Subject<ISection>;
 
-  constructor(){
+  constructor(private snackBar: MdSnackBar){
     this.subjectSection = new Subject<ISection>();
   }
 
@@ -28,4 +29,11 @@ export class ExchangeDataService{
   set spinner(state: boolean){
     this._spinner = state;
   }
+
+  openSnackBar( element:  string, currentAction: string) {
+    this.snackBar.open(`${element} has been:`, currentAction, {
+      duration: 1000,
+    });
+  }
+
 }

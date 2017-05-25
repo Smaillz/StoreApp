@@ -2,9 +2,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import {RouterModule} from "@angular/router";
 
-import {AppRoutingModule} from "./module/app-routing.module";
-import {AppMaterialModule} from "./module/app-material.module";
+import {appMainRoutes} from "./app-routing.module";
+import {AppMaterialModule} from "./app-material.module";
 
 import {AppComponent} from "./app.component";
 import {NavBarComponent} from "app/nav-bar/nav-bar.component";
@@ -20,6 +21,7 @@ import {ExchangeDataService} from "./service/exchangeData.service";
 import {SpinnerComponent} from "./mainContainer/spinner/spinner.component";
 import {ProductContainerComponent} from "./productContainer/productContainer.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
     FormsModule,
     HttpModule,
     AppMaterialModule,
-    AppRoutingModule,
+    RouterModule.forRoot(appMainRoutes)
   ],
   entryComponents: [
     ActionOverDialogSection,
