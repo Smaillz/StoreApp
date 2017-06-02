@@ -1,9 +1,9 @@
-import {MainContainerComponent} from "./mainContainer/mainContainer.component";
-import {ProductContainerComponent} from "./productContainer/productContainer.component";
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {Routes} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
+import {ModuleWithProviders} from "@angular/core";
+import {NotFoundCategoryComponent} from "./main-container/middle-content/not-found-category/not-found-category.component";
+import {CategoryProductsComponent} from "./main-container/middle-content/category-products/category-products.component";
 
-export const appMainRoutes: Routes = [
+export const appRoute: Routes = [
   {
     path: "",
     redirectTo: "main",
@@ -11,19 +11,17 @@ export const appMainRoutes: Routes = [
   },
   {
     path: "main",
-    component: MainContainerComponent,
-    pathMatch: "full"
+    loadChildren: "app/main-container/main-container.module#MainContainerModuleModule"
   },
   {
     path: "404",
-    component: NotFoundComponent,
+    component: NotFoundCategoryComponent,
     pathMatch: "full"
   },
   {
     path: ":name",
-    component: ProductContainerComponent,
-    pathMatch: "full"
+    component: CategoryProductsComponent,
   }
 ];
 
-
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoute);

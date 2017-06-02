@@ -1,16 +1,17 @@
 import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpService} from "../service/http.service";
-import {ICategory} from "../model/ICategory";
 import {Location} from "@angular/common";
+import {ICategory} from "../../../model/ICategory";
+import {HttpService} from "../../../service/http.service";
+import {ExchangeDataService} from "../../../service/exchangeData.service";
 
 @Component({
-  selector: "product-container",
-  templateUrl: "productContainer.component.html",
-  styleUrls: ["productContainer.component.less"]
+  selector: "product-category",
+  templateUrl: "category-products.component.html",
+  styleUrls: ["category-products.component.less"]
 })
-export class ProductContainerComponent implements OnInit, OnDestroy {
+export class CategoryProductsComponent implements OnInit, OnDestroy {
 
   private name: string;
   private subscription: Subscription = new Subscription();
@@ -18,6 +19,7 @@ export class ProductContainerComponent implements OnInit, OnDestroy {
 
   constructor(private activateRoute: ActivatedRoute,
               private httpService: HttpService,
+              private exchange: ExchangeDataService,
               private ngZone: NgZone,
               private router: Router,
               private location: Location) {
@@ -37,6 +39,7 @@ export class ProductContainerComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.ngZone.run(() => {
               try {
+                this.exchange.spinner = false;
                 this.category = res.json();
               } catch (e) {
                 this.router.navigateByUrl("404");
@@ -47,7 +50,7 @@ export class ProductContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
 

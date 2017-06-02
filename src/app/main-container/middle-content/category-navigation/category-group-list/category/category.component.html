@@ -1,0 +1,14 @@
+<div class="category-list">
+  <a class="link" *ngFor="let item of categoryes" routerLink="/{{item.urlName}}" routerLinkActive="active"
+     (click)="loadSpinner()">
+    <div class="description">
+      <img class="category-img" src="https://image.flaticon.com/icons/svg/401/401160.svg">
+      <span class="category-name">{{item.categoryName}}</span>
+    </div>
+  </a>
+  <a class="link" (click)="openDialog({'categoryGroupId':categoryGroupId},'create')">
+    <span class="category-add">
+      Add new catgory
+    </span>
+  </a>
+</div>

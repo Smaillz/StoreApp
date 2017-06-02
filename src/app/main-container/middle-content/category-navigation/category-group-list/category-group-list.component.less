@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  border: 1px solid gainsboro;
+}
+
+div.category-group-list {
+  display: flex;
+  width: 20%;
+  border-right: 1px solid lightgrey;
+  flex-direction: column;
+}
+
+div.category-group-item {
+  display: inline-flex;
+  justify-content: space-between;
+  color: #9E9E9E;
+  cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px solid #f6f6f6;
+  box-sizing: border-box;
+}
+
+div.active {
+  color: black;
+  background-color: #EEEEEE;
+  cursor: pointer;
+}
+
+div span.item-name {
+  width: 90%;
+  padding: 1px;
+  font-size: 18px;
+}
+
+div.add-item {
+  text-align: center;
+  border-bottom: 1px solid #EEEEEE;
+  border-radius: 0 0 0 10px;
+}
+
+div.add-item:hover {
+  background-color: lightgrey;
+}
+
+div.category-list {
+  width: 80%;
+}
