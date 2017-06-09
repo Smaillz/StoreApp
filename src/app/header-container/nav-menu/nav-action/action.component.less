@@ -1,13 +1,12 @@
 :host{
   display: flex;
   height: 50px;
-  margin: 5px;
-  border-radius: 50px;
-  background-color: #FFF176;
+  margin: 5px 100px;
+  background-color: #BDBDBD;
+  justify-content: space-between;
 }
 
 .fast-search__input {
-  margin: 5px 5px 5px 400px;
   background-size: 18px 18px;
   background: white url(https://gc.onliner.by/images/i-search.svg) no-repeat 12px 50%;
   border: solid 1px #ccc;
@@ -15,11 +14,42 @@
   box-sizing: border-box;
   outline: 0;
   padding: 0 10px 0 44px;
-  width: 400px;
-  height: 40px;
+  width: 600px;
+  height: 38px;
   font-size: 14px;
   -o-transition: border .1s linear;
   transition: border .1s linear;
   position: relative;
   z-index: 1;
+}
+
+div.action-searching{
+  padding: 5px;
+}
+
+button[md-raised-button]{
+  background-color: #C51162;
+  color: white;
+}
+div.social{
+  display: flex;
+  flex-direction: row;
+  background-color: #f6f6f6;
+  margin: 5px;
+  box-sizing: border-box;
+  border: 1px solid #9E9E9E;
+}
+
+.social-icon{
+  padding: 4px 10px;
+  border-right: 1px solid #9E9E9E;
+}
+
+.social-icon:hover{
+  background-color: #E0E0E0;
+}
+
+img{
+  width: 30px;
+  height: 30px;
 }

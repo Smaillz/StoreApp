@@ -1,0 +1,20 @@
+<div class="form-action">
+  <md-icon class="action" [@change-rotate]="show" (click)="showForm()">keyboard_arrow_left</md-icon>
+</div>
+<div class="form-fields">
+  <form [formGroup]="propertyForm" novalidate class="form-prop">
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Property name"   formControlName="name">
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Type"  formControlName="type">
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Priority"  formControlName="priority" >
+    </md-input-container>
+    <div class="btn-control full-width">
+      <button md-raised-button [disabled]="propertyForm.invalid" color="accent" (click)="addProperty()">Add</button>
+      <button md-raised-button color="warn" (click)="cleanForm()">Clear fields</button>
+    </div>
+  </form>
+</div>

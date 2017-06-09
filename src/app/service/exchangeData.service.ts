@@ -8,6 +8,7 @@ import {MdSnackBar} from "@angular/material";
 export class ExchangeDataService{
 
   private _spinner:boolean = true;
+  private _firstEnter:boolean = true;
   private subjectSection:Subject<ISection>;
 
   constructor(private snackBar: MdSnackBar){
@@ -20,6 +21,14 @@ export class ExchangeDataService{
 
   setDataSection(section: ISection) {
     this.subjectSection.next(section);
+  }
+
+  get firstEnter(): boolean{
+    return this._firstEnter;
+  }
+
+  set firstEnter(val: boolean){
+    this._firstEnter = val;
   }
 
   get spinner(): boolean{

@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {ISection} from "../model/ISection";
 import {ICategory} from "../model/ICategory";
 import {ICategoryGroup} from "../model/ICategoryGroup";
+import {IProperty} from "../model/IProperty";
 
 @Injectable()
 export class HttpService {
@@ -148,4 +149,40 @@ export class HttpService {
       });
   }
 
+  //Property
+  createProperty(newProperty: IProperty) {
+    return this.http.post(this.URL + 'properties/add', JSON.stringify(newProperty), {headers: this.headers})
+      .catch((err) => {
+        return Observable.throw(err);
+      });
+  }
+
+  readProperty(id: number) {
+    return this.http.get(this.URL + 'properties/get/' + id)
+      .catch((err) => {
+          return Observable.throw(err);
+        }
+      );
+  }
+
+  updateProperty(newProperty: IProperty) {
+    return this.http.post(this.URL + 'properties/update', JSON.stringify(newProperty), {headers: this.headers})
+      .catch((err) => {
+        return Observable.throw(err);
+      });
+  }
+
+  deleteProperty(id: number) {
+    return this.http.get(this.URL + 'properties/delete/' + id)
+      .catch((err) => {
+        return Observable.throw(err);
+      });
+  }
+
+  findAllProperty() {
+    return this.http.get(this.URL + 'properties/get')
+      .catch((err) => {
+        return Observable.throw(err);
+      });
+  }
 }

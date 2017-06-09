@@ -1,0 +1,13 @@
+<h1>All properties</h1>
+<div class="list-properties">
+  <div class="property-item" *ngFor="let item of properties" (click)="selectedProperty(item)"
+       [class.item-active]="item.id === selectedProp.id" [@dropPropety]="'in'" (@dropPropety.done)="goNext()">
+    <span class="span-name">
+      {{item.name}}
+    </span>
+  </div>
+</div>
+<div class="form-control-property">
+  <control-prop [property]="selectedProp"></control-prop>
+</div>
+

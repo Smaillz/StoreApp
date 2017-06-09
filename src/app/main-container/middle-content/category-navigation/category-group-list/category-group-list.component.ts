@@ -6,11 +6,12 @@ import {HttpService} from "../../../../service/http.service";
 import {ICategoryGroup} from "../../../../model/ICategoryGroup";
 import {ActionOverDialogCategoryGroup} from "../../../dialog/actionOverCategoryGroup/actionOverCategoryGroupDialog.component";
 import {ExchangeDataService} from "../../../../service/exchangeData.service";
+// import {routerTransition} from "../welcome-banner/banner.component";
 
 @Component({
   selector: 'category-group-list',
   templateUrl: 'category-group-list.component.html',
-  styleUrls: ['category-group-list.component.less']
+  styleUrls: ['category-group-list.component.less'],
 })
 export class CategoryGroupListComponent implements OnDestroy {
 

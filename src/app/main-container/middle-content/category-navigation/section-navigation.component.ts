@@ -16,7 +16,7 @@ export class SectionNavigationComponent implements OnInit, OnDestroy {
   private componentName: string = "Section";
   private sections;
   private action: string;
-  private subscription: Subscription = new Subscription();
+  private subscription = new Subscription();
   private doAction = {
     delete: this.removeSection,
     update: this.updateSection,

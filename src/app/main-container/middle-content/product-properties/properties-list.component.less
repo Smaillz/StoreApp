@@ -1,0 +1,78 @@
+:host {
+  display: flex;
+  overflow: hidden;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 5px 100px;
+  background-color: white;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid gainsboro;
+}
+
+div.list-properties {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 800px;
+  align-content: flex-start;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+div.property-item {
+  margin: 3px;
+  box-sizing: border-box;
+  width: calc(~"10% - 6px");
+  min-height: 40px;
+  background-color: #E0E0E0;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #757575;
+  border-bottom: 3px solid #757575;
+}
+
+div.property-item:hover{
+  box-sizing: border-box;
+  color: white;
+  background-color: #C51162;
+  border-bottom: 3px solid black;
+}
+
+div.item-active{
+  margin: 3px;
+  width: calc(~"10% - 6px");
+  min-height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #C51162;
+  color: white;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-bottom: 3px solid black;
+}
+
+.span-name{
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bolder;
+}
+
+
+div.form-control-property {
+  flex: 0;
+  max-width: 400px;
+}
+
+div.open-form {
+  height: 100%;
+}
